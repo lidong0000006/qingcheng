@@ -19,7 +19,7 @@ Write-Host "  [1/2] 启动后端服务..." -ForegroundColor Yellow
 Start-Process powershell -ArgumentList @(
     "-NoExit",
     "-Command",
-    "Set-Location '$projectRoot'; `$host.UI.RawUI.WindowTitle = '倾城之恋 - 后端 :3001'; `$env:USE_LOCAL_PROXY='true'; npm run start:backend"
+    "Set-Location '$projectRoot'; `$host.UI.RawUI.WindowTitle = '倾城之恋 - 后端 :3001'; npm run start:backend"
 ) -WindowStyle Normal
 
 # 稍等后端先初始化

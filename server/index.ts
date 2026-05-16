@@ -33,12 +33,16 @@ if (!supabaseUrl || !supabaseKey) {
 // Ensure the proxy is used for Supabase API requests to fix fetch failed.
 let customFetch = undefined;
 if (process.env.USE_LOCAL_PROXY === 'true') {
+  const proxyUrl = process.env.PROXY_URL || 'http://127.0.0.1:7890';
+  console.log(`🌐 Using local proxy: ${proxyUrl}`);
   try {
-    const dispatcher = new ProxyAgent('http://127.0.0.1:7890');
+    const dispatcher = new ProxyAgent(proxyUrl);
     customFetch = (url: any, options: any) => {
       return undiciFetch(url, { ...options, dispatcher });
     };
-  } catch(e) {}
+  } catch(e) {
+    console.error('❌ Failed to setup proxy:', e);
+  }
 }
 
 const supabase = createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseKey || 'placeholder', {
