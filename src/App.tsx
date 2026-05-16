@@ -186,15 +186,6 @@ function MessagesScreen({ onOpenChat, onNewMessage, refreshKey }: MessagesScreen
           </div>
         ))}
       </div>
-      {/* New Message FAB */}
-      <div className="fixed fab bottom-28 h-0 z-40">
-        <button 
-          onClick={onNewMessage} 
-          className="absolute right-6 w-14 h-14 bg-gradient-to-br from-primary to-primary-light text-white rounded-full shadow-lg shadow-primary/40 flex items-center justify-center active:scale-90 transition-transform"
-        >
-          <Edit2 className="w-6 h-6" />
-        </button>
-      </div>
     </main>
   );
 }
