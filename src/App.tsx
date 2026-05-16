@@ -75,7 +75,7 @@ function DiscoverScreen({ onUserClick, onChatWith, likedIds, onLike, showToast, 
   const filtered = searchText ? users.filter(u => u.name.toLowerCase().includes(searchText.toLowerCase()) || (u.tags || []).some((t: string) => t.includes(searchText))) : users;
 
   return (
-    <main className="pt-24 pb-32 px-6 max-w-7xl mx-auto">
+    <main className="pt-24 pb-32 px-6 w-full mx-auto">
       {searchOpen && (
         <div className="mb-6 relative animate-[slideDown_0.2s_ease-out]">
           <input autoFocus value={searchText} onChange={e => setSearchText(e.target.value)} className="w-full bg-gray-100 border-none rounded-2xl px-12 py-4 focus:ring-0 focus:bg-white transition-all placeholder:text-gray-400" placeholder="搜索名字或标签..." />
@@ -87,7 +87,7 @@ function DiscoverScreen({ onUserClick, onChatWith, likedIds, onLike, showToast, 
         <h2 className="text-4xl font-bold tracking-tight text-gray-900 mb-2">今日精选</h2>
         <p className="text-gray-600">为您的数字沙龙精心挑选。</p>
       </section>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-8">
         {filtered.map((user, idx) => (
           <div key={user.id} className="group relative flex flex-col gap-4 h-full" onClick={() => onUserClick(user)}>
             <div className="relative rounded-2xl overflow-hidden h-[500px] flex-shrink-0 shadow-lg transition-transform duration-500 group-hover:-translate-y-2 cursor-pointer">
@@ -151,7 +151,7 @@ function MessagesScreen({ onOpenChat, onNewMessage, refreshKey }: MessagesScreen
   const filtered = searchText ? messages.filter(m => m.name.toLowerCase().includes(searchText.toLowerCase()) || m.message.toLowerCase().includes(searchText.toLowerCase())) : messages;
 
   return (
-    <main className="pt-24 pb-32 px-6 max-w-2xl mx-auto">
+    <main className="pt-24 pb-32 px-6 w-full mx-auto">
       <section className="mb-10">
         <h1 className="font-extrabold text-4xl tracking-tight mb-2 text-gray-900">对话</h1>
         <p className="text-gray-500 text-lg">为您挑选的缘分正等待开启。</p>
@@ -186,9 +186,15 @@ function MessagesScreen({ onOpenChat, onNewMessage, refreshKey }: MessagesScreen
           </div>
         ))}
       </div>
-      <button onClick={onNewMessage} className="fixed right-8 w-14 h-14 bg-gradient-to-br from-primary to-primary-light text-white rounded-full shadow-lg shadow-primary/20 flex items-center justify-center active:scale-90 transition-transform z-40" style={{ bottom: 'calc(7rem + env(safe-area-inset-bottom))' }}>
-        <Edit2 className="w-6 h-6" />
-      </button>
+      {/* New Message FAB */}
+      <div className="fixed fab bottom-28 h-0 z-40">
+        <button 
+          onClick={onNewMessage} 
+          className="absolute right-6 w-14 h-14 bg-gradient-to-br from-primary to-primary-light text-white rounded-full shadow-lg shadow-primary/40 flex items-center justify-center active:scale-90 transition-transform"
+        >
+          <Edit2 className="w-6 h-6" />
+        </button>
+      </div>
     </main>
   );
 }
@@ -209,7 +215,7 @@ function MyProfileScreen({ showToast, onEditProfile, profile, onSettingsOpen, on
   };
 
   return (
-    <main className="pt-24 pb-32 px-6 max-w-2xl mx-auto space-y-10">
+    <main className="pt-24 pb-32 px-6 w-full mx-auto space-y-10">
       {showLogout && (
         <ConfirmDialog title="退出登录" message="确定要退出登录吗？退出后需要重新登录。" confirmText="退出" danger onConfirm={() => { setShowLogout(false); onLogout(); showToast('已退出登录', 'success'); }} onCancel={() => setShowLogout(false)} />
       )}
@@ -322,7 +328,7 @@ function UserProfileScreen({ onBack, userDetail, likedIds, onLike, onChatWith, s
         </div>
       </header>
 
-      <main className="pt-16 max-w-2xl mx-auto">
+      <main className="pt-16 w-full mx-auto">
         <section className="relative px-4 mt-6">
           <div className="flex gap-4 overflow-x-auto hide-scrollbar snap-x snap-mandatory py-2">
             {(profile.images || profile.album || FALLBACK_YILIN.images).map((img: string, idx: number) => (
@@ -585,7 +591,7 @@ export default function App() {
       {activeTab === 'profile' && <MyProfileScreen showToast={showToast} onEditProfile={() => setShowEditProfile(true)} profile={sessionUser} onSettingsOpen={setSettingsPage} onLogout={handleSignOut} onSwitchIdentity={handleIdentitySwitch} />}
 
       {/* Bottom Nav */}
-      <nav className="fixed left-1/2 -translate-x-1/2 flex justify-around items-center z-50 w-[92%] max-w-lg bg-white/90 backdrop-blur-md rounded-full px-4 py-3 shadow-xl" style={{ bottom: 'calc(2rem + env(safe-area-inset-bottom))' }}>
+      <nav className="fixed flex justify-around items-center z-50 w-[92%] bg-white/90 backdrop-blur-md rounded-full px-4 py-3 shadow-xl" style={{ bottom: 'calc(2rem + env(safe-area-inset-bottom))' }}>
         <button onClick={() => setActiveTab('discover')} className={`flex flex-col items-center justify-center transition-all duration-200 ${activeTab === 'discover' ? 'text-primary scale-110' : 'text-gray-400 opacity-60 hover:text-primary active:scale-90'}`}>
           <Compass className={`w-6 h-6 ${activeTab === 'discover' ? 'fill-current' : ''}`} />
           <span className="text-[11px] font-semibold uppercase tracking-wider mt-1">发现</span>

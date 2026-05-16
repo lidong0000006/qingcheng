@@ -12,11 +12,56 @@
 /* Mobile optimizations */
 html, body {
   -webkit-tap-highlight-color: transparent;
-  overscroll-behavior-y: none; /* Prevent pull-to-refresh on mobile if we want an app-like feel */
-  padding-top: env(safe-area-inset-top);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-  padding-bottom: env(safe-area-inset-bottom);
+  overscroll-behavior-y: none;
+  background-color: #111; /* Background behind the mobile container */
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+  max-width: 500px; /* Mobile app width constraint */
+  min-height: 100vh;
+  background-color: #fbf9fa;
+  position: relative;
+  box-shadow: 0 0 40px rgba(0,0,0,0.1);
+  overflow-x: hidden;
+}
+
+/* Update fixed elements to stay within container on desktop */
+.fixed:not(.fab) {
+  max-width: 500px;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+/* Specific centering for FABs within the constrained width */
+.fixed.fab {
+  max-width: 500px;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  pointer-events: none; /* Let clicks pass through the full-width container */
+}
+
+.fixed.fab > button {
+  pointer-events: auto; /* Re-enable clicks for the actual button */
+}
+
+/* Headers and navs should still span full container width */
+header.fixed, nav.fixed, div.fixed.inset-0 {
+  width: 100%;
+}
+
+/* Lightbox should remain full screen */
+.lightbox-overlay.fixed {
+  max-width: none;
+  left: 0 !important;
+  transform: none !important;
+  width: 100vw;
 }
 
 /* Hide scrollbar for horizontal scrolling areas */
@@ -39,7 +84,7 @@ html, body {
 .moments-screen {
   padding-top: 6rem;
   padding-bottom: 8rem;
-  max-width: 640px;
+  max-width: 100%;
   margin: 0 auto;
   padding-left: 1rem;
   padding-right: 1rem;
