@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #bc004b;
+  --primary-light: #ff5580;
+  --background: #f8fafc;
+  --surface: #ffffff;
+}
+
+body {
+  background-color: var(--background);
+  color: #1e293b;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[var(--primary)] hover:bg-[var(--primary-light)] text-white font-medium py-2 px-4 rounded-lg transition-colors;
+  }
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden;
+  }
+  .input {
+    @apply w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all;
+  }
+}
